@@ -1,4 +1,4 @@
-# ML-Ops_Scikit
+# ML-Ops_Scikit from feature/plot branch
 To run the Classification example follow below instructions:
 
 1. Create a new conda environment  
