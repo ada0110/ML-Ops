@@ -1,4 +1,8 @@
 # ML-Ops_Scikit from feature/plot branch
+
+> To avoid folder name confusion, I have put code in `src` folder.
+
+
 To run the Classification example follow below instructions:
 
 1. Create a new conda environment  
