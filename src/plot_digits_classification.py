@@ -18,6 +18,10 @@ import matplotlib.pyplot as plt
 # Import datasets, classifiers and performance metrics
 from sklearn import datasets, svm, metrics
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
+
+# Importing rescale, resize, reshape
+from skimage.transform import rescale, resize, downscale_local_mean 
 
 ###############################################################################
 # Digits dataset
@@ -34,6 +38,10 @@ from sklearn.model_selection import train_test_split
 # them using :func:`matplotlib.pyplot.imread`.
 
 digits = datasets.load_digits()
+
+print("shape of data:", digits.images.shape)
+print("shape of single image:", digits.images[0].shape, end="\n\n")
+
 
 _, axes = plt.subplots(nrows=1, ncols=4, figsize=(10, 3))
 for ax, image, label in zip(axes, digits.images, digits.target):
@@ -56,47 +64,102 @@ for ax, image, label in zip(axes, digits.images, digits.target):
 # subsequently be used to predict the value of the digit for the samples
 # in the test subset.
 
-# flatten the images
-n_samples = len(digits.images)
-data = digits.images.reshape((n_samples, -1))
+def digitsClassifier(data, test_size):
+    #print("\n\ndata shape:", data.shape)
+    #print("train-test split is:", 1-test_size,":",test_size, "\n\n")
 
-# Create a classifier: a support vector classifier
-clf = svm.SVC(gamma=0.001)
+    # flatten the images
+    n_samples = len(data)
+    data = data.reshape((n_samples, -1))
 
-# Split data into 50% train and 50% test subsets
-X_train, X_test, y_train, y_test = train_test_split(
-    data, digits.target, test_size=0.5, shuffle=False)
+    # Create a classifier: a support vector classifier
+    clf = svm.SVC(gamma=0.001)
 
-# Learn the digits on the train subset
-clf.fit(X_train, y_train)
+    # Split data into 50% train and 50% test subsets
+    X_train, X_test, y_train, y_test = train_test_split(
+        data, digits.target[:len(data)], test_size=test_size, shuffle=False)
 
-# Predict the value of the digit on the test subset
-predicted = clf.predict(X_test)
+    # Learn the digits on the train subset
+    clf.fit(X_train, y_train)
 
-###############################################################################
-# Below we visualize the first 4 test samples and show their predicted
-# digit value in the title.
+    # Predict the value of the digit on the test subset
+    predicted = clf.predict(X_test)
+    a = round(accuracy_score(y_test, predicted), 4)
+    p = round(precision_score(y_test, predicted, average='macro', zero_division=0), 4)
+    r = round(recall_score(y_test, predicted, average='macro', zero_division=0), 4)
+    f1 = round(f1_score(y_test, predicted, average='macro', zero_division=0), 4)
 
-_, axes = plt.subplots(nrows=1, ncols=4, figsize=(10, 3))
-for ax, image, prediction in zip(axes, X_test, predicted):
-    ax.set_axis_off()
-    image = image.reshape(8, 8)
-    ax.imshow(image, cmap=plt.cm.gray_r, interpolation='nearest')
-    ax.set_title(f'Prediction: {prediction}')
+    return [a, p, r, f1]
+    
 
-###############################################################################
-# :func:`~sklearn.metrics.classification_report` builds a text report showing
-# the main classification metrics.
 
-print(f"Classification report for classifier {clf}:\n"
-      f"{metrics.classification_report(y_test, predicted)}\n")
+results = []
+data_org = digits.images
+print("data_org:", data_org.shape)
+# calling the function on original data
+results.append(digitsClassifier(data_org, test_size=0.2))
+results.append(digitsClassifier(data_org, test_size=0.3))
+results.append(digitsClassifier(data_org, test_size=0.4))
 
-###############################################################################
-# We can also plot a :ref:`confusion matrix <confusion_matrix>` of the
-# true digit values and the predicted digit values.
+# rescaling images 
+image_rescaled = rescale(data_org, 0.9, anti_aliasing=False)
+print("\n\nimage_rescaled:", image_rescaled.shape)
+results.append(digitsClassifier(image_rescaled, test_size=0.2))
+results.append(digitsClassifier(image_rescaled, test_size=0.3))
+results.append(digitsClassifier(image_rescaled, test_size=0.4))
 
-disp = metrics.plot_confusion_matrix(clf, X_test, y_test)
-disp.figure_.suptitle("Confusion Matrix")
-print(f"Confusion matrix:\n{disp.confusion_matrix}")
 
-plt.show()
+image_rescaled = rescale(data_org, 0.75, anti_aliasing=False)
+print("\n\nimage_rescaled:", image_rescaled.shape)
+results.append(digitsClassifier(image_rescaled, test_size=0.2))
+results.append(digitsClassifier(image_rescaled, test_size=0.3))
+results.append(digitsClassifier(image_rescaled, test_size=0.4))
+
+
+image_rescaled = rescale(data_org, 0.6, anti_aliasing=False)
+print("\n\nimage_rescaled:", image_rescaled.shape)
+results.append(digitsClassifier(image_rescaled, test_size=0.2))
+results.append(digitsClassifier(image_rescaled, test_size=0.3))
+results.append(digitsClassifier(image_rescaled, test_size=0.4))
+
+
+# resizing images 
+image_resized = resize(data_org, (data_org.shape[0] // 4, data_org.shape[1] // 4),
+                       anti_aliasing=True)
+print("\n\nimage_resized:", image_resized.shape)
+results.append(digitsClassifier(image_resized, test_size=0.2))
+results.append(digitsClassifier(image_resized, test_size=0.3))
+results.append(digitsClassifier(image_resized, test_size=0.4))
+
+for r in results:
+    print(f"{r[0]}     {r[1]}    {r[2]}    {r[3]}")
+
+
+# # downscaling images
+# image_downscaled = downscale_local_mean(data_org, (4, 3))
+# digitsClassifier(image_downscaled, test_size=0.2)
+# digitsClassifier(image_downscaled, test_size=0.3)
+# digitsClassifier(image_downscaled, test_size=0.4)
+
+
+
+# fig, axes = plt.subplots(nrows=2, ncols=2)
+
+# ax = axes.ravel()
+
+# ax[0].imshow(image, cmap='gray')
+# ax[0].set_title("Original image")
+
+# ax[1].imshow(image_rescaled, cmap='gray')
+# ax[1].set_title("Rescaled image (aliasing)")
+
+# ax[2].imshow(image_resized, cmap='gray')
+# ax[2].set_title("Resized image (no aliasing)")
+
+# ax[3].imshow(image_downscaled, cmap='gray')
+# ax[3].set_title("Downscaled image (no aliasing)")
+
+# ax[0].set_xlim(0, 512)
+# ax[0].set_ylim(512, 0)
+# plt.tight_layout()
+# plt.show()
