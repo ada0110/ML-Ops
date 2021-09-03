@@ -15,6 +15,8 @@ print(__doc__)
 # Standard scientific Python imports
 import matplotlib.pyplot as plt
 
+import numpy as np
+
 # Import datasets, classifiers and performance metrics
 from sklearn import datasets, svm, metrics
 from sklearn.model_selection import train_test_split
@@ -102,34 +104,58 @@ results.append(digitsClassifier(data_org, test_size=0.3))
 results.append(digitsClassifier(data_org, test_size=0.4))
 
 # rescaling images 
-image_rescaled = rescale(data_org, 0.9, anti_aliasing=False)
+image_rescaled = []
+for img in data_org:
+    image_rescaled.append(rescale(img, 0.9, anti_aliasing=False))
+image_rescaled = np.array(image_rescaled)
 print("\n\nimage_rescaled:", image_rescaled.shape)
+
 results.append(digitsClassifier(image_rescaled, test_size=0.2))
 results.append(digitsClassifier(image_rescaled, test_size=0.3))
 results.append(digitsClassifier(image_rescaled, test_size=0.4))
 
-
-image_rescaled = rescale(data_org, 0.75, anti_aliasing=False)
+image_rescaled = []
+for img in data_org:
+    image_rescaled.append(rescale(img, 0.75, anti_aliasing=False))
+image_rescaled = np.array(image_rescaled)
 print("\n\nimage_rescaled:", image_rescaled.shape)
+
 results.append(digitsClassifier(image_rescaled, test_size=0.2))
 results.append(digitsClassifier(image_rescaled, test_size=0.3))
 results.append(digitsClassifier(image_rescaled, test_size=0.4))
 
-
-image_rescaled = rescale(data_org, 0.6, anti_aliasing=False)
+image_rescaled = []
+for img in data_org:
+    image_rescaled.append(rescale(img, 0.6, anti_aliasing=False))
+image_rescaled = np.array(image_rescaled)
 print("\n\nimage_rescaled:", image_rescaled.shape)
+
 results.append(digitsClassifier(image_rescaled, test_size=0.2))
 results.append(digitsClassifier(image_rescaled, test_size=0.3))
 results.append(digitsClassifier(image_rescaled, test_size=0.4))
 
 
 # resizing images 
-image_resized = resize(data_org, (data_org.shape[0] // 4, data_org.shape[1] // 4),
-                       anti_aliasing=True)
+image_resized = []
+for img in data_org:
+    image_resized.append(resize(img, (data_org[0].shape[0] // 4, data_org[0].shape[1] // 4), anti_aliasing=True))
+image_resized = np.array(image_resized)
 print("\n\nimage_resized:", image_resized.shape)
+
 results.append(digitsClassifier(image_resized, test_size=0.2))
 results.append(digitsClassifier(image_resized, test_size=0.3))
 results.append(digitsClassifier(image_resized, test_size=0.4))
+
+image_resized = []
+for img in data_org:
+    image_resized.append(resize(img, (data_org[0].shape[0] // 2, data_org[0].shape[1] // 2), anti_aliasing=True))
+image_resized = np.array(image_resized)
+print("\n\nimage_resized:", image_resized.shape)
+
+results.append(digitsClassifier(image_resized, test_size=0.2))
+results.append(digitsClassifier(image_resized, test_size=0.3))
+results.append(digitsClassifier(image_resized, test_size=0.4))
+
 
 for r in results:
     print(f"{r[0]}     {r[1]}    {r[2]}    {r[3]}")
