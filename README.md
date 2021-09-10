@@ -14,7 +14,7 @@ To run the Classification example follow below instructions:
 3. To install requirements, use conda. This will ensure that dependencies are resolved correctly.  
 ```conda install --file requirements.txt```
 
-**Output**
+**Initial Output**
 
 ```
 ================================
@@ -56,6 +56,8 @@ Confusion matrix:
  [ 0  0  0  1  0  1  0  0  0 90]]
 ```
 
+**Results on Rescaling and Resizing Images**
+
 ```
 image size    train:test       accuracy   precision  recall    f1
   8*8          80:20            0.9583     0.9594    0.9586    0.9578
@@ -82,8 +84,8 @@ image size    train:test       accuracy   precision  recall    f1
   2*2          70:30            0.4389     0.4196    0.4394    0.3825
   2*2          60:40            0.459      0.372     0.4558    0.3969
 ```
-
-* Changing hyperparameter and observing results: 
+<!-- 
+**Changing hyperparameter and observing results for **
 ```
 gamma     accuracy   precision    recall        f1
 0.0005    0.9556      0.9565      0.9555      0.9554
@@ -92,9 +94,67 @@ gamma     accuracy   precision    recall        f1
 0.01      0.6963      0.9241      0.6971      0.7544
 0.05      0.1019      0.1099      0.1038      0.0252
 0.1       0.0981      0.0098      0.1         0.0179
+``` -->
+
+**Results on changing gamma hyperparameter and observing results for 70:15:15 split**
+
+> The scores below are in the order: [accuracy, precision, recall, f1]
+
+```
+shape of data: (1797, 8, 8)
+shape of single image: (8, 8)
+
+
+gamma: 5e-06
+        train scores:   [0.7486, 0.8064, 0.7449, 0.6943]
+        test scores:    [0.7037, 0.6482, 0.6929, 0.6485]
+        val scores:     [0.7037, 0.6598, 0.7093, 0.6514]
+
+gamma: 0.0001
+        train scores:   [0.9857, 0.9859, 0.9856, 0.9856]
+        test scores:    [0.9556, 0.9639, 0.955, 0.9546]
+        val scores:     [0.9, 0.9108, 0.8998, 0.8977]
+
+gamma: 0.0005
+        train scores:   [0.9976, 0.9976, 0.9976, 0.9976]
+        test scores:    [0.9852, 0.9858, 0.9849, 0.985]
+        val scores:     [0.9259, 0.9314, 0.9259, 0.925]
+
+gamma: 0.001
+        train scores:   [0.9992, 0.9992, 0.9992, 0.9992]
+        test scores:    [0.9926, 0.993, 0.9926, 0.9926]
+        val scores:     [0.9481, 0.9515, 0.9479, 0.9477]
+
+gamma: 0.005
+        train scores:   [1.0, 1.0, 1.0, 1.0]
+        test scores:    [0.9333, 0.9581, 0.9335, 0.9371]
+        val scores:     [0.8444, 0.9306, 0.8445, 0.8639]
+
+gamma: 0.01
+        train scores:   [1.0, 1.0, 1.0, 1.0]
+        test scores:    [0.7556, 0.9275, 0.7588, 0.7955]
+        val scores:     [0.637, 0.9216, 0.6353, 0.7004]
+
+gamma: 0.05
+        train scores:   [1.0, 1.0, 1.0, 1.0]
+        test scores:    [0.1037, 0.11, 0.1037, 0.0254]
+        val scores:     [0.1, 0.1097, 0.1038, 0.025]
+
+gamma: 0.1
+        train scores:   [1.0, 1.0, 1.0, 1.0]
+        test scores:    [0.1, 0.01, 0.1, 0.0182]
+        val scores:     [0.0963, 0.0096, 0.1, 0.0176]
+
+
+best validation f1 score is 0.9477 for optimal gamma 0.001
+
+Optimal gamma: 0.001
+        train scores:   [0.9992, 0.9992, 0.9992, 0.9992]
+        test scores:    [0.9926, 0.993, 0.9926, 0.9926]
+        val scores:     [0.9481, 0.9515, 0.9479, 0.9477]
 ```
 
 **Observations**
 1. After resizing the images to lower dimensions, the numbers for accuracy, precision, recall and f1 are decreasing. This is due to loss in information.
-2. With respect to train-test split, for 8*8, 7*7 and 6*6, the numbers are better for 70:30 split. In general, as we decrease training samples, numbers go down.
-3. As we increase the gamma value, the scores are decreasing. For gamma=0.01 and gamma=0.05, the change in scores is high. For gamma = 0.001, the scores are better.
+2. With respect to train-test split, for `8*8`, `7*7` and `6*6`, the numbers are better for `70:30` split. In general, as we decrease training samples, numbers go down.
+3. As we increase the gamma values from `5e-06` to `0.1`, the scores increase and then decrease. For gamma = `0.001`, we get the best f1 score. We found the optimal gamma using `70:15:15` train:test:validation split.
