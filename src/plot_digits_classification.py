@@ -109,70 +109,70 @@ for gamma in [0.0005, 0.001, 0.005, 0.01, 0.05, 0.1]:
         print(f"a:{r[0]}  p:{r[1]}  r:{r[2]}  f1:{r[3]} \n")
 
 
-# results = []
-# data_org = digits.images
-# print("data_org:", data_org.shape)
-# # calling the function on original data
-# results.append(digitsClassifier(data_org, test_size=0.2))
-# results.append(digitsClassifier(data_org, test_size=0.3))
-# results.append(digitsClassifier(data_org, test_size=0.4))
+results = []
+data_org = digits.images
+print("data_org:", data_org.shape)
+# calling the function on original data
+results.append(digitsClassifier(data_org, test_size=0.2))
+results.append(digitsClassifier(data_org, test_size=0.3))
+results.append(digitsClassifier(data_org, test_size=0.4))
 
-# # rescaling images 
-# image_rescaled = []
-# for img in data_org:
-#     image_rescaled.append(rescale(img, 0.9, anti_aliasing=False))
-# image_rescaled = np.array(image_rescaled)
-# print("\n\nimage_rescaled:", image_rescaled.shape)
+# rescaling images 
+image_rescaled = []
+for img in data_org:
+    image_rescaled.append(rescale(img, 0.9, anti_aliasing=False))
+image_rescaled = np.array(image_rescaled)
+print("\n\nimage_rescaled:", image_rescaled.shape)
 
-# results.append(digitsClassifier(image_rescaled, test_size=0.2))
-# results.append(digitsClassifier(image_rescaled, test_size=0.3))
-# results.append(digitsClassifier(image_rescaled, test_size=0.4))
+results.append(digitsClassifier(image_rescaled, test_size=0.2))
+results.append(digitsClassifier(image_rescaled, test_size=0.3))
+results.append(digitsClassifier(image_rescaled, test_size=0.4))
 
-# image_rescaled = []
-# for img in data_org:
-#     image_rescaled.append(rescale(img, 0.75, anti_aliasing=False))
-# image_rescaled = np.array(image_rescaled)
-# print("\n\nimage_rescaled:", image_rescaled.shape)
+image_rescaled = []
+for img in data_org:
+    image_rescaled.append(rescale(img, 0.75, anti_aliasing=False))
+image_rescaled = np.array(image_rescaled)
+print("\n\nimage_rescaled:", image_rescaled.shape)
 
-# results.append(digitsClassifier(image_rescaled, test_size=0.2))
-# results.append(digitsClassifier(image_rescaled, test_size=0.3))
-# results.append(digitsClassifier(image_rescaled, test_size=0.4))
+results.append(digitsClassifier(image_rescaled, test_size=0.2))
+results.append(digitsClassifier(image_rescaled, test_size=0.3))
+results.append(digitsClassifier(image_rescaled, test_size=0.4))
 
-# image_rescaled = []
-# for img in data_org:
-#     image_rescaled.append(rescale(img, 0.6, anti_aliasing=False))
-# image_rescaled = np.array(image_rescaled)
-# print("\n\nimage_rescaled:", image_rescaled.shape)
+image_rescaled = []
+for img in data_org:
+    image_rescaled.append(rescale(img, 0.6, anti_aliasing=False))
+image_rescaled = np.array(image_rescaled)
+print("\n\nimage_rescaled:", image_rescaled.shape)
 
-# results.append(digitsClassifier(image_rescaled, test_size=0.2))
-# results.append(digitsClassifier(image_rescaled, test_size=0.3))
-# results.append(digitsClassifier(image_rescaled, test_size=0.4))
-
-
-# # resizing images 
-# image_resized = []
-# for img in data_org:
-#     image_resized.append(resize(img, (data_org[0].shape[0] // 4, data_org[0].shape[1] // 4), anti_aliasing=True))
-# image_resized = np.array(image_resized)
-# print("\n\nimage_resized:", image_resized.shape)
-
-# results.append(digitsClassifier(image_resized, test_size=0.2))
-# results.append(digitsClassifier(image_resized, test_size=0.3))
-# results.append(digitsClassifier(image_resized, test_size=0.4))
-
-# image_resized = []
-# for img in data_org:
-#     image_resized.append(resize(img, (data_org[0].shape[0] // 2, data_org[0].shape[1] // 2), anti_aliasing=True))
-# image_resized = np.array(image_resized)
-# print("\n\nimage_resized:", image_resized.shape)
-
-# results.append(digitsClassifier(image_resized, test_size=0.2))
-# results.append(digitsClassifier(image_resized, test_size=0.3))
-# results.append(digitsClassifier(image_resized, test_size=0.4))
+results.append(digitsClassifier(image_rescaled, test_size=0.2))
+results.append(digitsClassifier(image_rescaled, test_size=0.3))
+results.append(digitsClassifier(image_rescaled, test_size=0.4))
 
 
-# for r in results:
-#     print(f"{r[0]}     {r[1]}    {r[2]}    {r[3]}")
+# resizing images 
+image_resized = []
+for img in data_org:
+    image_resized.append(resize(img, (data_org[0].shape[0] // 4, data_org[0].shape[1] // 4), anti_aliasing=True))
+image_resized = np.array(image_resized)
+print("\n\nimage_resized:", image_resized.shape)
+
+results.append(digitsClassifier(image_resized, test_size=0.2))
+results.append(digitsClassifier(image_resized, test_size=0.3))
+results.append(digitsClassifier(image_resized, test_size=0.4))
+
+image_resized = []
+for img in data_org:
+    image_resized.append(resize(img, (data_org[0].shape[0] // 2, data_org[0].shape[1] // 2), anti_aliasing=True))
+image_resized = np.array(image_resized)
+print("\n\nimage_resized:", image_resized.shape)
+
+results.append(digitsClassifier(image_resized, test_size=0.2))
+results.append(digitsClassifier(image_resized, test_size=0.3))
+results.append(digitsClassifier(image_resized, test_size=0.4))
+
+
+for r in results:
+    print(f"{r[0]}     {r[1]}    {r[2]}    {r[3]}")
 
 
 
