@@ -1,6 +1,6 @@
-# ML-Ops_Scikit from feature/plot branch
+# ML-Ops 
 
-> To avoid folder name confusion, I have put code in `src` folder.
+This repo contains code for the ongoing MLOps course at IIT Jodhpur. For most recent changes, please check respective branches of the repo.
 
 
 To run the Classification example follow below instructions:
@@ -13,6 +13,8 @@ To run the Classification example follow below instructions:
 
 3. To install requirements, use conda. This will ensure that dependencies are resolved correctly.  
 ```conda install --file requirements.txt```
+
+<br>
 
 **Initial Output**
 
@@ -55,6 +57,7 @@ Confusion matrix:
  [ 0  0  0  0  0  0  0  0 88  0]
  [ 0  0  0  1  0  1  0  0  0 90]]
 ```
+<br>
 
 **Results on Rescaling and Resizing Images**
 
@@ -95,6 +98,7 @@ gamma     accuracy   precision    recall        f1
 0.05      0.1019      0.1099      0.1038      0.0252
 0.1       0.0981      0.0098      0.1         0.0179
 ``` -->
+<br>
 
 **Results on changing gamma hyperparameter and observing results for 70:15:15 split**
 
@@ -153,6 +157,7 @@ Optimal gamma: 0.001
         test scores:    [0.9926, 0.993, 0.9926, 0.9926]
         val scores:     [0.9481, 0.9515, 0.9479, 0.9477]
 ```
+<br>
 
 **Observations**
 1. After resizing the images to lower dimensions, the numbers for accuracy, precision, recall and f1 are decreasing. This is due to loss in information.
