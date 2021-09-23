@@ -166,50 +166,65 @@ Optimal gamma: 0.001
 
 **Saving and Predicting from Best model**
 
-- For `gamma = 0.01` we get better scores and for that gamma we save the model and make predictions on the saved model. 
+- For `gamma = 0.001` we get better scores and for that gamma we save the model and make predictions on the saved model. 
 
 ```
+shape of data: (1797, 8, 8)
+shape of single image: (8, 8)
+
+
+data: (1797, 64)
+
+(x, y) shape: (1797, 64) (1797,)
+(x_train, y_train) shape: (1257, 64) (1257,)
+(x_test, y_test) shape: (270, 64) (270,)
+(x_val, y_val) shape: (270, 64) (270,)
+
+
 gamma: 5e-06
         train scores:   [0.7486, 0.8064, 0.7449, 0.6943]
         val scores:     [0.7037, 0.6598, 0.7093, 0.6514]
+
 
 gamma: 0.0001
         train scores:   [0.9857, 0.9859, 0.9856, 0.9856]
         val scores:     [0.9, 0.9108, 0.8998, 0.8977]
 
+
 gamma: 0.0005
         train scores:   [0.9976, 0.9976, 0.9976, 0.9976]
         val scores:     [0.9259, 0.9314, 0.9259, 0.925]
+
 
 gamma: 0.001
         train scores:   [0.9992, 0.9992, 0.9992, 0.9992]
         val scores:     [0.9481, 0.9515, 0.9479, 0.9477]
 
+
 gamma: 0.005
         train scores:   [1.0, 1.0, 1.0, 1.0]
         val scores:     [0.8444, 0.9306, 0.8445, 0.8639]
+
 
 gamma: 0.01
         train scores:   [1.0, 1.0, 1.0, 1.0]
         val scores:     [0.637, 0.9216, 0.6353, 0.7004]
 
-skipping for 0.05
+>> skipping for gamma: 0.05 as 0.025 is less than 0.11
+>> skipping for gamma: 0.1 as 0.0176 is less than 0.11
 
-
-skipping for 0.1
 
 Saving the best model...
 
 
 best validation f1 score is 0.9477 for optimal gamma 0.001
-        test scores:   [0.9926, 0.993, 0.9926, 0.9926]
+        test scores:    [0.9926, 0.993, 0.9926, 0.9926]
 
 
 loading the model:
 SVC(gamma=0.001)
 
-Predicting from loaded model:
-        test scores:   [0.9926, 0.993, 0.9926, 0.9926]
-
+predicting from loaded model:
+        test scores:    [0.9926, 0.993, 0.9926, 0.9926] 
 ```
 
