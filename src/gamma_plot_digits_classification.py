@@ -177,9 +177,6 @@ print(f"\ttest scores:   {[a_test, p_test, r_test, f1_test]}\n\n")
 # for s,r in zip(["train", "test", "val"], best_metrics):
 #     print(f"\t{s + ' scores:':<15} {r}")
 
-# remove for loop (for gamma in gammas) and take gamma as command line argument 
-
-
 
 # loading the saved model
 print("loading the model:")

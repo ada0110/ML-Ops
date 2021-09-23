@@ -166,6 +166,8 @@ Optimal gamma: 0.001
 
 **Saving and Predicting from Best model**
 
+- For `gamma = 0.01` we get better scores and for that gamma we save the model and make predictions on the saved model. 
+
 ```
 gamma: 5e-06
         train scores:   [0.7486, 0.8064, 0.7449, 0.6943]
@@ -208,6 +210,6 @@ SVC(gamma=0.001)
 
 Predicting from loaded model:
         test scores:   [0.9926, 0.993, 0.9926, 0.9926]
-        
+
 ```
 
