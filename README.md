@@ -158,3 +158,56 @@ Optimal gamma: 0.001
 1. After resizing the images to lower dimensions, the numbers for accuracy, precision, recall and f1 are decreasing. This is due to loss in information.
 2. With respect to train-test split, for `8*8`, `7*7` and `6*6`, the numbers are better for `70:30` split. In general, as we decrease training samples, numbers go down.
 3. As we increase the gamma values from `5e-06` to `0.1`, the scores increase and then decrease. For gamma = `0.001`, we get the best f1 score. We found the optimal gamma using `70:15:15` train:test:validation split.
+
+
+
+<br/>
+
+
+**Saving and Predicting from Best model**
+
+```
+gamma: 5e-06
+        train scores:   [0.7486, 0.8064, 0.7449, 0.6943]
+        val scores:     [0.7037, 0.6598, 0.7093, 0.6514]
+
+gamma: 0.0001
+        train scores:   [0.9857, 0.9859, 0.9856, 0.9856]
+        val scores:     [0.9, 0.9108, 0.8998, 0.8977]
+
+gamma: 0.0005
+        train scores:   [0.9976, 0.9976, 0.9976, 0.9976]
+        val scores:     [0.9259, 0.9314, 0.9259, 0.925]
+
+gamma: 0.001
+        train scores:   [0.9992, 0.9992, 0.9992, 0.9992]
+        val scores:     [0.9481, 0.9515, 0.9479, 0.9477]
+
+gamma: 0.005
+        train scores:   [1.0, 1.0, 1.0, 1.0]
+        val scores:     [0.8444, 0.9306, 0.8445, 0.8639]
+
+gamma: 0.01
+        train scores:   [1.0, 1.0, 1.0, 1.0]
+        val scores:     [0.637, 0.9216, 0.6353, 0.7004]
+
+skipping for 0.05
+
+
+skipping for 0.1
+
+Saving the best model...
+
+
+best validation f1 score is 0.9477 for optimal gamma 0.001
+        test scores:   [0.9926, 0.993, 0.9926, 0.9926]
+
+
+loading the model:
+SVC(gamma=0.001)
+
+Predicting from loaded model:
+        test scores:   [0.9926, 0.993, 0.9926, 0.9926]
+        
+```
+

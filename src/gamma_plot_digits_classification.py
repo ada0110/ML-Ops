@@ -195,4 +195,4 @@ p_test = round(precision_score(y_test, predicted, average='macro', zero_division
 r_test = round(recall_score(y_test, predicted, average='macro', zero_division=0), 4)
 f1_test = round(f1_score(y_test, predicted, average='macro', zero_division=0), 4)    
 
-print(f"\ttest scores:   {[a_test, p_test, r_test, f1_test]}\n\n")
+print(f"\ttest scores:   {[a_test, p_test, r_test, f1_test]} \n\n")
