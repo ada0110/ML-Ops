@@ -9,22 +9,10 @@ hand-written digits, from 0-9.
 
 print(__doc__)
 
-# Author: Gael Varoquaux <gael dot varoquaux at normalesup dot org>
-# License: BSD 3 clause
-
 import pickle
-# Standard scientific Python imports
 import matplotlib.pyplot as plt
-
 import numpy as np
-
-# Import datasets, classifiers and performance metrics
-from sklearn import datasets, svm, metrics
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
-
-# Importing rescale, resize, reshape
-from skimage.transform import rescale, resize, downscale_local_mean 
+from sklearn import datasets
 
 ###############################################################################
 # Digits dataset
@@ -40,17 +28,6 @@ from skimage.transform import rescale, resize, downscale_local_mean
 # Note: if we were working from image files (e.g., 'png' files), we would load
 # them using :func:`matplotlib.pyplot.imread`.
 
-digits = datasets.load_digits()
-
-print("shape of data:", digits.images.shape)
-print("shape of single image:", digits.images[0].shape, end="\n\n")
-
-
-_, axes = plt.subplots(nrows=1, ncols=4, figsize=(10, 3))
-for ax, image, label in zip(axes, digits.images, digits.target):
-    ax.set_axis_off()
-    ax.imshow(image, cmap=plt.cm.gray_r, interpolation='nearest')
-    ax.set_title('Training: %i' % label)
 
 ###############################################################################
 # Classification
@@ -67,115 +44,64 @@ for ax, image, label in zip(axes, digits.images, digits.target):
 # subsequently be used to predict the value of the digit for the samples
 # in the test subset.
 
+# import utils.py
+from utils import preprocess, data_split, get_scores, digitsClassifier
 
+digits = datasets.load_digits()
 
+print("shape of data:", digits.images.shape)
+print("shape of single image:", digits.images[0].shape, end="\n\n")
 
-def digitsClassifier(gamma=0.001):
-    #print("\n\ndata shape:", data.shape)
-    #print("train-test split is:", 1-test_size,":",test_size, "\n\n")
+data_org = digits.images
+target = digits.target
 
-
-    # printing the shapes
-    # print(f"X_train:{X_train.shape}, X_test:{X_test.shape}, \ny_train:{y_train.shape},\
-    #  y_test:{y_test.shape}, \nX_val:{X_val.shape},y_val:{y_val.shape}")
-
-    # Create a classifier: a support vector classifier
-    clf = svm.SVC(gamma=gamma)
-
-    # Learn the digits on the train subset
-    clf.fit(X_train, y_train)
-
-    # Predict the value of the digit on the train subset
-    predicted = clf.predict(X_train)
-    a_train = round(accuracy_score(y_train, predicted), 4)
-    p_train = round(precision_score(y_train, predicted, average='macro', zero_division=0), 4)
-    r_train = round(recall_score(y_train, predicted, average='macro', zero_division=0), 4)
-    f1_train = round(f1_score(y_train, predicted, average='macro', zero_division=0), 4)
-
-    # Predict the value of the digit on the test subset
-    # predicted = clf.predict(X_test)
-    # a_test = round(accuracy_score(y_test, predicted), 4)
-    # p_test = round(precision_score(y_test, predicted, average='macro', zero_division=0), 4)
-    # r_test = round(recall_score(y_test, predicted, average='macro', zero_division=0), 4)
-    # f1_test = round(f1_score(y_test, predicted, average='macro', zero_division=0), 4)    
-    
-
-    # Predict the value of the digit on the validation subset
-    predicted = clf.predict(X_val)
-    a_val = round(accuracy_score(y_val, predicted), 4)
-    p_val = round(precision_score(y_val, predicted, average='macro', zero_division=0), 4)
-    r_val = round(recall_score(y_val, predicted, average='macro', zero_division=0), 4)
-    f1_val = round(f1_score(y_val, predicted, average='macro', zero_division=0), 4)
-
-
-    return clf, [[a_train, p_train, r_train, f1_train], [a_val, p_val, r_val, f1_val]]
-    
-
-# take gamma as command line argument 0
-# gammas = list(map(float, input().split()))
-# print("gamma", gammas)
-
-
-# checking for different gamma values
-data = digits.images
-
-# flatten the images
-n_samples = len(data)
-data = data.reshape((n_samples, -1))
-
-# split data into 70% train and 30% (test + val) subsets
-X_train, X_test, y_train, y_test = train_test_split(data, digits.target, test_size=0.3, shuffle=False)
-
-# split test into test(15%) and val(15%)
-X_test, X_val, y_test, y_val = train_test_split(X_test, y_test, test_size=0.5, shuffle=False)
-
+data = preprocess(data_org)
+x_train, x_test, x_val, y_train, y_test, y_val = data_split(data, target)
 
 gammas =  [0.000005, 0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05, 0.1]
 results_gamma = []
 best_f1 = -1
 gamma_opt = -1
-best_metrics = []
-
+thres_f1 = 0.11
 
 for gamma in gammas:
-    clf, res = digitsClassifier(gamma=gamma)
+    clf = digitsClassifier(x_train, y_train, gamma)
 
-    # skippping gammas where accuracy is less than 0.11
-    if res[1][3] < 0.11:
-        print(f"\nskipping for {gamma}\n")
+    # predict on train and val sets and get scores
+    res_train = get_scores(clf, x_train, y_train)
+    res_val = get_scores(clf, x_val, y_val)
+
+    # skippping gammas where accuracy is less than thres_f1
+    # validation f1 is 4th elem
+    if res_val[3] < thres_f1:
+        print(f">> skipping for gamma: {gamma} as {res_val[3]} is less than {thres_f1}")
         continue 
-
+    
+    res = [res_train, res_val]
     results_gamma.append(res)
 
     print(f"\ngamma: {gamma}")
     for s,r in zip(["train", "val"], res):
         print(f"\t{s + ' scores:':<15} {r}")
+    print("")
 
-    # validation f1 is in 3rd row, 4th col
-    if res[1][3] > best_f1:
-        best_f1 = res[1][3]
+    # validation f1 is 4th elem
+    if res_val[3] > best_f1:
+        best_f1 = res_val[3]
         gamma_opt = gamma
-        best_metrics = res
         best_clf = clf
+        best_metrics = res
 
-print("Saving the best model...")
+print("\n\nSaving the best model...")
 save_file = open(f'/home/ada/codes/ML-Ops_Scikit/models/best_clf_{best_f1}.pkl', 'wb')
 pickle.dump(best_clf, save_file)
 save_file.close()
 
-
 # should run only for best gamma 
-predicted = best_clf.predict(X_test)
-a_test = round(accuracy_score(y_test, predicted), 4)
-p_test = round(precision_score(y_test, predicted, average='macro', zero_division=0), 4)
-r_test = round(recall_score(y_test, predicted, average='macro', zero_division=0), 4)
-f1_test = round(f1_score(y_test, predicted, average='macro', zero_division=0), 4)    
+res_test = get_scores(best_clf, x_test, y_test)
 
 print(f"\n\nbest validation f1 score is {best_f1} for optimal gamma {gamma_opt}") 
-print(f"\ttest scores:   {[a_test, p_test, r_test, f1_test]}\n\n")
-
-# for s,r in zip(["train", "test", "val"], best_metrics):
-#     print(f"\t{s + ' scores:':<15} {r}")
+print(f"\ttest scores:    {res_test}\n\n")
 
 
 # loading the saved model
@@ -184,12 +110,7 @@ load_file = open(f'/home/ada/codes/ML-Ops_Scikit/models/best_clf_{best_f1}.pkl',
 loaded_model = pickle.load(load_file)
 print(loaded_model)
 
-print("\nPredicting from loaded model:")
-# should run only for best gamma 
-predicted = loaded_model.predict(X_test)
-a_test = round(accuracy_score(y_test, predicted), 4)
-p_test = round(precision_score(y_test, predicted, average='macro', zero_division=0), 4)
-r_test = round(recall_score(y_test, predicted, average='macro', zero_division=0), 4)
-f1_test = round(f1_score(y_test, predicted, average='macro', zero_division=0), 4)    
-
-print(f"\ttest scores:   {[a_test, p_test, r_test, f1_test]} \n\n")
+# load saved model and predict on it
+print("\npredicting from loaded model:") 
+res_test = get_scores(loaded_model, x_test, y_test)
+print(f"\ttest scores:    {res_test} \n\n")
