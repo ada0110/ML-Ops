@@ -1,4 +1,4 @@
-# ML-Ops_Scikit from feature/plot branch
+# ML-Ops
 
 > To avoid folder name confusion, I have put code in `src` folder.
 
