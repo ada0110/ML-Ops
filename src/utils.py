@@ -1,3 +1,5 @@
+import numpy as np
+import pickle
 # Import datasets, classifiers and performance metrics
 from sklearn import datasets, svm, metrics
 
@@ -60,3 +62,16 @@ def digitsClassifier(x, y, gamma=0.001):
     clf.fit(x, y)
 
     return clf
+
+
+def save_model(clf, path):
+    print("\nSaving the best model...")
+    save_file = open(path, 'wb')
+    pickle.dump(clf, save_file)
+    save_file.close()
+
+def load_model(path):
+    print("\nloading the model...")
+    load_file = open(path, "rb")
+    loaded_model = pickle.load(load_file)
+    return loaded_model
