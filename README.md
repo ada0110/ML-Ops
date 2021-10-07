@@ -227,4 +227,18 @@ SVC(gamma=0.001)
 predicting from loaded model:
         test scores:    [0.9926, 0.993, 0.9926, 0.9926] 
 ```
+<br/>
 
+**Pytest Experiment Output**  
+
+```
+==================================================== test session starts ====================================================platform linux -- Python 3.6.9, pytest-6.2.5, py-1.10.0, pluggy-1.0.0
+rootdir: /home/ada/codes/ML-Ops_Scikit/tests
+plugins: anyio-3.3.0
+collected 5 items
+
+test_exampes.py ...                                                                                                   [ 60%] (py3.6) ada@LAPTOP-U0O9E34L:~/codes/ML-Ops_Scikit/tests$ pytest
+test_model.py ..                                                                                                      [100%] platform linux -- Python 3.6.9, pytest-6.2.5, py-1.10.0, pluggy-1.0.0   
+
+===================================================== 5 passed in 1.45s =====================================================
+```
