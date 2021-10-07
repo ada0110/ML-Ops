@@ -45,7 +45,7 @@ from sklearn import datasets
 # in the test subset.
 
 # import utils.py
-from utils import preprocess, data_split, get_scores, digitsClassifier
+from utils import preprocess, data_split, get_scores, digitsClassifier, save_model, load_model
 
 digits = datasets.load_digits()
 
@@ -92,10 +92,10 @@ for gamma in gammas:
         best_clf = clf
         best_metrics = res
 
-print("\n\nSaving the best model...")
-save_file = open(f'/home/ada/codes/ML-Ops_Scikit/models/best_clf_{best_f1}.pkl', 'wb')
-pickle.dump(best_clf, save_file)
-save_file.close()
+
+# saving model
+model_path = f'/home/ada/codes/ML-Ops_Scikit/models/best_clf_{best_f1}.pkl'
+save_model(best_clf, model_path)
 
 # should run only for best gamma 
 res_test = get_scores(best_clf, x_test, y_test)
@@ -105,12 +105,10 @@ print(f"\ttest scores:    {res_test}\n\n")
 
 
 # loading the saved model
-print("loading the model:")
-load_file = open(f'/home/ada/codes/ML-Ops_Scikit/models/best_clf_{best_f1}.pkl', 'rb')
-loaded_model = pickle.load(load_file)
+loaded_model = load_model(model_path)
 print(loaded_model)
 
-# load saved model and predict on it
+# predicting from loaded model
 print("\npredicting from loaded model:") 
 res_test = get_scores(loaded_model, x_test, y_test)
 print(f"\ttest scores:    {res_test} \n\n")
