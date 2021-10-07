@@ -232,13 +232,16 @@ predicting from loaded model:
 **Pytest Experiment Output**  
 
 ```
-==================================================== test session starts ====================================================platform linux -- Python 3.6.9, pytest-6.2.5, py-1.10.0, pluggy-1.0.0
+(py3.6) ada@LAPTOP-U0O9E34L:~/codes/ML-Ops_Scikit/tests$ pytest
+=============================== test session starts ===============================
+platform linux -- Python 3.6.9, pytest-6.2.5, py-1.10.0, pluggy-1.0.0
 rootdir: /home/ada/codes/ML-Ops_Scikit/tests
 plugins: anyio-3.3.0
 collected 5 items
 
-test_exampes.py ...                                                                                                   [ 60%] (py3.6) ada@LAPTOP-U0O9E34L:~/codes/ML-Ops_Scikit/tests$ pytest
-test_model.py ..                                                                                                      [100%] platform linux -- Python 3.6.9, pytest-6.2.5, py-1.10.0, pluggy-1.0.0   
+test_exampes.py ...                                                         [ 60%]
+test_model.py ..                                                            [100%] 
 
-===================================================== 5 passed in 1.45s =====================================================
+================================ 5 passed in 1.09s ================================
+(py3.6) ada@LAPTOP-U0O9E34L:~/codes/ML-Ops_Scikit/tests$ 
 ```
