@@ -245,3 +245,39 @@ test_model.py ..                                                            [100
 ================================ 5 passed in 1.09s ================================
 (py3.6) ada@LAPTOP-U0O9E34L:~/codes/ML-Ops_Scikit/tests$ 
 ```
+
+<br/>
+
+**Pytest Split Check**  
+
+```
+(py3.6) ada@LAPTOP-U0O9E34L:~/codes/ML-Ops_Scikit/tests$ pytest                                                ============================================= test session starts =============================================
+platform linux -- Python 3.6.9, pytest-6.2.5, py-1.10.0, pluggy-1.0.0
+rootdir: /home/ada/codes/ML-Ops_Scikit/tests
+plugins: anyio-3.3.0
+collected 8 items                                                                                             
+
+test_exampes.py ...                                                                                     [ 37%]
+test_model.py ..                                                                                        [ 62%]
+test_splits.py ...                                                                                      [100%]
+
+============================================== 8 passed in 1.01s ==============================================
+```
+
+
+**Pytest Model Save/Load check**  
+
+```
+(py3.6) ada@LAPTOP-U0O9E34L:~/codes/ML-Ops_Scikit/tests$ pytest
+===================================== test session starts ======================================
+platform linux -- Python 3.6.9, pytest-6.2.5, py-1.10.0, pluggy-1.0.0
+rootdir: /home/ada/codes/ML-Ops_Scikit/tests
+plugins: anyio-3.3.0
+collected 9 items                                                                              
+
+test_exampes.py ...                                                                      [ 33%]
+test_model.py ..                                                                         [ 55%]
+test_quiz.py ....                                                                        [100%]
+
+====================================== 9 passed in 1.18s =======================================
+```
