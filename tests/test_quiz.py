@@ -9,7 +9,7 @@ from sklearn import datasets
 from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
 
 # import utils
-from src.utils import preprocess, data_split, get_scores, digitsClassifier, save_model
+from src.utils import load_model, preprocess, data_split, get_scores, digitsClassifier, save_model
 
 
 '''
@@ -51,7 +51,6 @@ def test_data_split_100():
     assert len(x_test) == test_size, "test size not correct"
     assert len(x_val) == val_size, "val size not correct"
     assert len(x_train)+len(x_test)+len(x_val) == n, "total size not correct"
-
 
 
 def test_data_split_9():
@@ -102,3 +101,30 @@ def test_data_label_size():
     assert len(x_test) == len(y_test), "test data, label size not correct"
     assert len(x_val) == len(y_val), "val data, label size not correct"
     assert len(x_train)+len(x_test)+len(x_val) == len(y_train)+len(y_test)+len(y_val), "total size of data, label not correct"
+
+
+def test_model_save_load():
+    # data
+    digits = datasets.load_digits()
+    data_org = digits.images
+    target = digits.target
+
+    # preprocess
+    data = preprocess(data_org)
+
+    # split
+    x_train, x_test, x_val, y_train, y_test, y_val = data_split(data, target)
+    # train
+    clf = digitsClassifier(x_train, y_train)
+
+    # saving model
+    path = "../models/test_save_model.pkl"
+    save_model(clf, path)
+
+    # laoding model
+    loaded_model = load_model(path)
+    print(loaded_model.support_vectors_)
+    print(clf.support_vectors_)
+
+    assert np.allclose(loaded_model.support_vectors_, clf.support_vectors_), f"saved model is not same as original!"
+
