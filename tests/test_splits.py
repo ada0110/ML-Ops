@@ -78,3 +78,27 @@ def test_data_split_9():
     assert len(x_val) == val_size, "val size not correct"
     assert len(x_train)+len(x_test)+len(x_val) == n, "total size not correct"
 
+
+# bonus components
+def test_data_label_size():
+    n = 100
+    # split sizes
+    train_size=70
+    test_size=20
+    val_size=10
+
+    # data
+    digits = datasets.load_digits()
+
+    # take small sample
+    data_org = digits.images[:n]
+    target = digits.target[:n]
+    data = preprocess(data_org)
+    
+    # split
+    x_train, x_test, x_val, y_train, y_test, y_val = data_split(data, target, train_size=train_size, test_size=test_size, val_size=val_size)
+
+    assert len(x_train) == len(y_train), "train data, label size not correct"
+    assert len(x_test) == len(y_test), "test data, label size not correct"
+    assert len(x_val) == len(y_val), "val data, label size not correct"
+    assert len(x_train)+len(x_test)+len(x_val) == len(y_train)+len(y_test)+len(y_val), "total size of data, label not correct"
