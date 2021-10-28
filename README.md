@@ -96,6 +96,11 @@ gamma     accuracy   precision    recall        f1
 0.1       0.0981      0.0098      0.1         0.0179
 ``` -->
 
+<br>
+<hr>
+<br>
+
+
 **Results on changing gamma hyperparameter and observing results for 70:15:15 split**
 
 > The scores below are in the order: [accuracy, precision, recall, f1]
@@ -159,9 +164,9 @@ Optimal gamma: 0.001
 2. With respect to train-test split, for `8*8`, `7*7` and `6*6`, the numbers are better for `70:30` split. In general, as we decrease training samples, numbers go down.
 3. As we increase the gamma values from `5e-06` to `0.1`, the scores increase and then decrease. For gamma = `0.001`, we get the best f1 score. We found the optimal gamma using `70:15:15` train:test:validation split.
 
-
-
-<br/>
+<br>
+<hr>
+<br>
 
 
 **Saving and Predicting from Best model**
@@ -227,7 +232,10 @@ SVC(gamma=0.001)
 predicting from loaded model:
         test scores:    [0.9926, 0.993, 0.9926, 0.9926] 
 ```
-<br/>
+<br>
+<hr>
+<br>
+
 
 **Pytest Experiment Output**  
 
@@ -281,3 +289,124 @@ test_quiz.py ....                                                               
 
 ====================================== 9 passed in 1.18s =======================================
 ```
+
+<br>
+<hr>
+<br>
+
+
+**Model Comparison**
+
+shape of data: (1797, 8, 8)
+shape of single image: (8, 8)
+
+
+data: (1797, 64)
+
+***tuning gamma parameter for svm classifier***
+
+```
+gamma: 5e-06
+        train scores:   [0.7144, 0.7426, 0.7069, 0.6614]
+        val scores:     [0.6556, 0.6039, 0.6994, 0.6167]
+
+
+gamma: 0.0001
+        train scores:   [0.9801, 0.9801, 0.9799, 0.9798]
+        val scores:     [0.9556, 0.958, 0.963, 0.9579]
+
+
+gamma: 0.0005
+        train scores:   [0.996, 0.9959, 0.996, 0.996]
+        val scores:     [0.9889, 0.9882, 0.9931, 0.9902]
+
+
+gamma: 0.001
+        train scores:   [1.0, 1.0, 1.0, 1.0]
+        val scores:     [0.9889, 0.9882, 0.9931, 0.9902]
+
+
+gamma: 0.005
+        train scores:   [1.0, 1.0, 1.0, 1.0]
+        val scores:     [0.9611, 0.9673, 0.9644, 0.9635]
+
+
+gamma: 0.01
+        train scores:   [1.0, 1.0, 1.0, 1.0]
+        val scores:     [0.7833, 0.9278, 0.7842, 0.8143]
+
+>> skipping for gamma: 0.05 as 0.0154 is less than 0.11
+>> skipping for gamma: 0.1 as 0.0154 is less than 0.11
+
+
+best validation f1 score is 0.9902 for optimal gamma 0.0005
+        train scores:     [0.996, 0.9959, 0.996, 0.996]
+        val scores:       [0.9889, 0.9882, 0.9931, 0.9902]
+        test scores:    [0.9806, 0.9806, 0.9816, 0.9807]
+
+```
+
+***tuning max_depth parameter for decision tree classifier***
+
+```
+depth: 10
+        train scores:   [1.0, 1.0, 1.0, 1.0]
+        val scores:     [0.8722, 0.8726, 0.8764, 0.8721]
+
+
+depth: 12
+        train scores:   [1.0, 1.0, 1.0, 1.0]
+        val scores:     [0.8667, 0.865, 0.8736, 0.8645]
+
+
+depth: 14
+        train scores:   [1.0, 1.0, 1.0, 1.0]
+        val scores:     [0.8778, 0.8768, 0.884, 0.8773]
+
+
+depth: 16
+        train scores:   [1.0, 1.0, 1.0, 1.0]
+        val scores:     [0.8667, 0.8685, 0.8726, 0.8683]
+
+
+depth: 18
+        train scores:   [1.0, 1.0, 1.0, 1.0]
+        val scores:     [0.8722, 0.8703, 0.8774, 0.8699]
+
+
+depth: 20
+        train scores:   [1.0, 1.0, 1.0, 1.0]
+        val scores:     [0.8556, 0.8497, 0.8644, 0.852]
+
+
+
+best validation f1 score is 0.8773 for depth 14
+        train scores:     [1.0, 1.0, 1.0, 1.0]
+        val scores:       [0.8778, 0.8768, 0.884, 0.8773]
+        test scores:      [0.8472, 0.857, 0.8519, 0.8487]
+
+```
+
+***printing test scores of both classifiers on 5 train(60):test(30):val(10) sets***
+> scores are shown as [accuracy, precision, recall, f1] on test set of each split.
+
+```
+Sr.No                SVM Scores                   Decision Tree Scores
+split 0:     [0.9944 0.994  0.994  0.9939]    [0.846  0.8488 0.8446 0.8437]
+
+split 1:     [0.9889 0.9887 0.9894 0.989 ]    [0.8646 0.8656 0.8673 0.8654]
+
+split 2:     [0.9852 0.9853 0.9846 0.9848]    [0.8071 0.812  0.8081 0.8088]
+
+split 3:     [0.9889 0.9902 0.9888 0.9893]    [0.8367 0.8361 0.8399 0.8351]
+
+split 4:     [0.9814 0.9827 0.9813 0.9818]    [0.8516 0.8506 0.851  0.8484]
+
+mean:        [0.9878 0.9882 0.9876 0.9878]     [0.8412 0.8426 0.8422 0.8403]
+std dev:     [0.0043 0.0039 0.0043 0.0041]     [0.0193 0.0179 0.0194 0.0186]
+```
+
+**Conclusion**  
+1. From the scores, we can see that the SVM classifier performing better than decision tree classsifier on all 4 metrics. 
+2. Mean scores of SVM classifier are more than 10 points higher than decision tree, this is beacause we are performing image classification task and dealing with high dimensional vectors. 
+3. Also, in terms of standard deviation, SVM classifier has low fluctuations compared to decision tree classifier.
