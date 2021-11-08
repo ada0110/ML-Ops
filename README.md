@@ -1,3 +1,21 @@
+# Flask 
+
+**1. Simple sentiment analyzer**   
+
+To run the code, go to the folder and run python main.py
+
+![senti](img/senti.png)
+
+
+
+**2. Webpage visit counter**  
+
+To run the code, go to the folder and run python app.py  
+
+![senti](img/visit_count.png)
+
+
+
 # ML-Ops
 
 > To avoid folder name confusion, I have put code in `src` folder.
