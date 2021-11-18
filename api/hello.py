@@ -23,21 +23,21 @@ def hello_world():
 
 # curl http://localhost:5000/predict -X POST  -H 'Content-Type: application/json' -d '{"image": ["1.0", "2.0", "3.0"]}'
 
+clf = load_model(best_model_path)
+print("***model loaded***\n")
+
 @app.route("/predict", methods=['POST'])
 def predict():
-    clf = load_model(best_model_path)
-    print("model loaded\n")
-
     input_json = request.json
     image = input_json['image']
     image = np.array(image).reshape(1, -1)
 
     prediction = clf.predict(image)
-    print("image:", image)
-    print("prediction:", prediction[0])
+    print("image:\n", image)
+    print("prediction:", prediction[0], end="\n\n")
 
     return str(prediction[0])
-    # return f'<p>image: {image}<p><br>'
+
     
 
 if __name__ == '__main__':
