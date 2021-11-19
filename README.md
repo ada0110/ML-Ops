@@ -1,3 +1,26 @@
+# Pytest Quiz3
+
+```
+(py3.6) ada@LAPTOP-U0O9E34L:~/codes/ML-Ops_Scikit/tests$ pytest test_quiz3.py 
+=============================================== test session starts ===============================================
+platform linux -- Python 3.6.9, pytest-6.2.5, py-1.10.0, pluggy-1.0.0
+rootdir: /home/ada/codes/ML-Ops_Scikit/tests
+plugins: anyio-3.3.0
+collected 20 items                                                                                                
+
+test_quiz3.py ....................                                                                          [100%]
+
+================================================ warnings summary =================================================
+test_quiz3.py:47
+  /home/ada/codes/ML-Ops_Scikit/tests/test_quiz3.py:47: FutureWarning: Using a non-tuple sequence for multidimensional indexing is deprecated; use `arr[tuple(seq)]` instead of `arr[seq]`. In the future this will be interpreted as an array index, `arr[np.array(seq)]`, which will result either in an error or a different result.
+    samples.append(x_test[idx_i][0])
+
+-- Docs: https://docs.pytest.org/en/stable/warnings.html
+========================================== 20 passed, 1 warning in 0.77s ==========================================
+(py3.6) ada@LAPTOP-U0O9E34L:~/codes/ML-Ops_Scikit/tests$ 
+```
+
+
 # Flask 
 
 **1. Simple sentiment analyzer**   
