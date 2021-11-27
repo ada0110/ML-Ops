@@ -115,16 +115,15 @@ def test_model_save_load():
     # split
     x_train, x_test, x_val, y_train, y_test, y_val = data_split(data, target)
     # train
-    clf = digitsClassifier(x_train, y_train)
+    clf = digitsClassifier(x_train, y_train,  gamma=.01)
 
     # saving model
-    path = "../models/test_save_model.pkl"
+    path = "../models/best_model_decision.pkl"
     save_model(clf, path)
 
     # laoding model
     loaded_model = load_model(path)
-    print(loaded_model.support_vectors_)
-    print(clf.support_vectors_)
-
+    
     assert np.allclose(loaded_model.support_vectors_, clf.support_vectors_), f"saved model is not same as original!"
 
+test_model_save_load()

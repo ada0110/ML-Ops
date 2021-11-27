@@ -119,7 +119,7 @@ def train_decisionTree(x_train, y_train, x_val, y_val, x_test, y_test, depths):
             best_clf = clf
             best_metrics = res
 
-    # should run only for best gamma 
+    # should run only for best depth 
     res_test = get_scores(best_clf, x_test, y_test)
 
     print(f"\n\nbest validation f1 score is {best_f1} for depth {depth_opt}") 
@@ -162,6 +162,21 @@ target = digits.target
 data = preprocess(data_org)
 x_train, x_test, x_val, y_train, y_test, y_val = data_split(data, target, debug=False)
 
+# print("\n***tuning gamma parameter for svm classifier***\n")
+# gammas =  [0.000005, 0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05, 0.1]
+# opt_gamma = train_svm(x_train, y_train, x_val, y_val, x_test, y_test, gammas)
+
+# print("\n***tuning max_depth parameter for decision tree classifier***\n")
+# depths = [10, 12, 14, 16, 18, 20] 
+# opt_depth = train_decisionTree(x_train, y_train, x_val, y_val, x_test, y_test, depths)
+
+
+# running the classifiers on 5 train:test:val splits for comparison
+results_svm = []
+results_dt = []
+
+x_train, x_test, x_val, y_train, y_test, y_val = data_split(data, target, train_size=0.6, test_size=0.3, val_size=0.1, debug=False)
+
 print("\n***tuning gamma parameter for svm classifier***\n")
 gammas =  [0.000005, 0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05, 0.1]
 opt_gamma = train_svm(x_train, y_train, x_val, y_val, x_test, y_test, gammas)
@@ -170,17 +185,10 @@ print("\n***tuning max_depth parameter for decision tree classifier***\n")
 depths = [10, 12, 14, 16, 18, 20] 
 opt_depth = train_decisionTree(x_train, y_train, x_val, y_val, x_test, y_test, depths)
 
+print(f"optimal gamma:{opt_gamma}   optimal depth:{opt_depth}\n")
+results_svm.append(train_classifier(x_train, y_train, x_val, y_val, x_test, y_test, clf_type='svm', clf_param=opt_gamma))
 
-# running the classifiers on 5 train:test:val splits for comparison
-results_svm = []
-results_dt = []
-
-for _ in range(5):
-    x_train, x_test, x_val, y_train, y_test, y_val = data_split(data, target, train_size=0.6, test_size=0.3, val_size=0.1, debug=False)
-
-    results_svm.append(train_classifier(x_train, y_train, x_val, y_val, x_test, y_test, clf_type='svm', clf_param=opt_gamma))
-
-    results_dt.append(train_classifier(x_train, y_train, x_val, y_val, x_test, y_test,clf_type='decision', clf_param=opt_depth))
+results_dt.append(train_classifier(x_train, y_train, x_val, y_val, x_test, y_test,clf_type='decision', clf_param=opt_depth))
 
 
 # converting results into numpy array
@@ -189,6 +197,7 @@ results_dt_np = np.array([elem[2] for elem in results_dt])
 
 print("\n***Printing test scores of both classifiers on 5 train:val:test sets***\n")
 
+print("                         SVM                         Decision Tree\n")
 for i in range(5):
     print(f"split {i}:     {results_svm_np[i].round(4)}    {results_dt_np[i].round(4)}\n")
 
