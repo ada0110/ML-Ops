@@ -1,8 +1,12 @@
 # Final Exam
-Command for docker:
+Command for docker:  
+
+Build docker image:  
+`docker build --tag digit_classifier_app .`
+
+This will save the files written to saved_models folder of container to host:
 `docker run -v /home/ada/saved_models:/saved_models digit_classifier_app`
 
-This will save the files written to saved_models folder of container to host.
 
 
 ```
