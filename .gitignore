@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 models/
+*.pkl
+*.7z
 
 # C extensions
 *.so
