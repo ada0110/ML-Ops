@@ -4,7 +4,7 @@ Command for docker:
 Build docker image:  
 `docker build --tag digit_classifier_app .`
 
-Run the container on port 5000
+Run the container on port 5000  
 `docker run -p 5000:5000 digit_classifier_app`
 
 
