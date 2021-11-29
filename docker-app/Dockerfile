@@ -16,5 +16,5 @@ RUN pip install -r requirements.txt
 # copy all other things from our directory to image
 COPY . .
 
-CMD [ "python", "digits_classifier_hyper.py"]
+CMD [ "python", "app.py"]
 
