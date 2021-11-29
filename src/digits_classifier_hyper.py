@@ -57,7 +57,7 @@ def tune_svm(x_train, y_train, x_val, y_val, x_test, y_test, gammas, C, kernels,
                         save_file.close()
 
     print(f"\n\nbest validation f1 score is {best_f1} for optimal values of gamma {gamma_opt} | kernel:{kernel_opt} | c:{c_opt}") 
-    print(f"\tbest scores on train/val/test: {res}")
+    print(f"\tbest scores on train/val/test: {best_metrics}")
 
     return results_dict, best_clf, gamma_opt, kernel_opt, c_opt
 
@@ -108,7 +108,6 @@ for k in keys:
     for i in range(num_runs):
         print(results[f"run_{i}"][k], end="\t")
     print("")
-
 
 
 

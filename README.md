@@ -4,8 +4,8 @@ Command for docker:
 Build docker image:  
 `docker build --tag digit_classifier_app .`
 
-This will save the files written to saved_models folder of container to host:
-`docker run -v /home/ada/saved_models:/saved_models digit_classifier_app`
+This will save the files written to saved_models folder of container to host:  
+`docker run -v /home/ada/saved_models:/app/saved_models digit_classifier_app`
 
 
 
@@ -41,7 +41,7 @@ gamma: 0.01 | kernel:linear | c:10
 
 
 best validation f1 score is 0.9963 for optimal values of gamma 0.001 | kernel:rbf | c:10
-        best scores on train/val/test: [1.0, 0.982, 0.989]
+        best scores on train/val/test: [1.0, 0.9963, 0.9961]
 hyper_param, train_f1, val_f1, test_f1
 (0.001, 'rbf', 1) [0.9976, 0.9926, 0.9961]
 (0.001, 'rbf', 10) [1.0, 0.9963, 0.9961]
@@ -68,7 +68,7 @@ gamma: 0.01 | kernel:linear | c:10
 
 
 best validation f1 score is 0.9802 for optimal values of gamma 0.001 | kernel:rbf | c:1
-        best scores on train/val/test: [1.0, 0.9756, 0.9846]
+        best scores on train/val/test: [0.9984, 0.9802, 0.9958]
 hyper_param, train_f1, val_f1, test_f1
 (0.001, 'rbf', 1) [0.9984, 0.9802, 0.9958]
 (0.001, 'rbf', 10) [1.0, 0.9802, 0.9958]
@@ -95,7 +95,7 @@ gamma: 0.01 | kernel:linear | c:10
 
 
 best validation f1 score is 0.9959 for optimal values of gamma 0.001 | kernel:rbf | c:1
-        best scores on train/val/test: [1.0, 0.9809, 0.9582]
+        best scores on train/val/test: [0.9984, 0.9959, 0.9866]
 hyper_param, train_f1, val_f1, test_f1
 (0.001, 'rbf', 1) [0.9984, 0.9959, 0.9866]
 (0.001, 'rbf', 10) [1.0, 0.9959, 0.9867]

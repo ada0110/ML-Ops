@@ -5,7 +5,7 @@
 FROM python:3.6-slim-buster
 
 # this tell docker to use this path for all subsequent commands, i.e. paths will be relative to this directory
-WORKDIR /app
+WORKDIR /app    
 
 # will copy the requirements.txt from our folder to working directory /app of image
 COPY requirements.txt requirements.txt
