@@ -1,6 +1,9 @@
 # ML-Ops 
 
-This repo contains code for the ongoing MLOps course at IIT Jodhpur. For most recent changes, please check respective branches of the repo.
+This repo contains code for the MLOps course at IIT Jodhpur. For most recent changes, please check respective branches of the repo. Some main ones are:
+- [model-comparision](https://github.com/ada0110/ML-Ops/tree/feature/model_comparison)
+- [flask-app](https://github.com/ada0110/ML-Ops/tree/feature/api)
+- [docker and pytest](https://github.com/ada0110/ML-Ops/tree/assgn10)
 
 
 To run the Classification example follow below instructions:
